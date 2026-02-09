@@ -2,7 +2,12 @@ import { apiFetch } from "@/src/lib/apiClient";
 import { Post } from "../types/post";
 
 export const PostService = {
-  getAll: () => apiFetch<Post[]>("/posts"),
+  getAll: (limit?: number) => {
+    const params = new URLSearchParams();
+    if (limit  && limit > 0) params.append('_limit', limit.toString());
+    const query = params.toString();
+    return apiFetch<Post[]>(`/posts${query ? `?${query}` : ''}`);
+  },
 
   getById: (id: number) =>
     apiFetch<Post>(`/posts/${id}`),
