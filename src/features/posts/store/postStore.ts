@@ -5,7 +5,7 @@ import { Post } from "../types/post";
 
 interface PostState {
   posts: Post[];
-  setPosts: (posts: Post[]) => void;
+  setPosts: (postsOrFn: Post[] | ((prev: Post[]) => Post[])) => void;
 
   addPost: (post: Post) => void;
   updatePost: (post: Post) => void;
