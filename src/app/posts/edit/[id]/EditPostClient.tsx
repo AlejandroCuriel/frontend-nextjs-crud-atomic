@@ -1,60 +1,69 @@
 "use client";
 
-import { useMemo } from "react";
-import { useRouter } from "next/navigation";
-import { usePostStore } from "@/src/features/posts/store/postStore";
 import { PostService } from "@/src/features/posts/services/postService";
+import { usePostStore } from "@/src/features/posts/store/postStore";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo } from "react";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import BackButton from "@/src/components/atoms/BackButton";
 import { postSchema } from "@/src/features/posts/schemas/postSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
-import Link from "next/link";
-import BackButton from "@/src/components/atoms/BackButton";
 
 type FormData = z.infer<typeof postSchema>;
 
 export function EditPostClient({ id }: { id: number }) {
   const router = useRouter();
-  console.log('id:', id)
-  const posts = usePostStore(state => state.posts);
-  const updatePost = usePostStore(state => state.updatePost);
+  const posts = usePostStore((state) => state.posts);
+  const updatePost = usePostStore((state) => state.updatePost);
 
   const post = useMemo(() => {
-    return posts.find(p => p.id === id);
+    return posts.find((p) => p.id === id);
   }, [posts, id]);
-  console.log('post:', post)
-  let form
-  if (post) {
-    form = useForm<FormData>({
-      resolver: zodResolver(postSchema),
-      values: {
-        id: post?.id,
-        title: post?.title || "",
-        body: post?.body || "",
-        userId: 1,
-      }
+
+  const form = useForm<FormData>({
+    resolver: zodResolver(postSchema),
+    defaultValues: {
+      id: post?.id,
+      title: post?.title ?? "",
+      body: post?.body ?? "",
+      userId: 1
+    }
+  });
+
+  useEffect(() => {
+    if (!post) return;
+
+    form.reset({
+      id: post.id,
+      title: post.title ?? "",
+      body: post.body ?? "",
+      userId: 1
     });
-  }
+  }, [post, form]);
 
   if (!post) {
     return (
       <div className="text-center py-10">
-        Post no encontrado
+        {posts.length === 0 ? "Cargando..." : "Post no encontrado"}
       </div>
     );
   }
 
+  const currentPost = post;
+
   async function onSubmit(data: FormData) {
     try {
       // Fake API update
-      await PostService.update(1, data);
+      await PostService.update(id, data);
 
       // Real store update
       updatePost({
-        ...post,
-        ...data
+        ...currentPost,
+        ...data,
+        id: currentPost.id
       });
 
       toast.success("Post actualizado");
@@ -69,8 +78,7 @@ export function EditPostClient({ id }: { id: number }) {
   return (
     <main className="min-h-screen space-y-6 flex items-center justify-center">
       <div className="lg:w-2/6 mx-4 lg:mx-auto bg-[#f8f8f8] p-4 rounded-md shadow-md">
-        <BackButton/>
-        
+        <BackButton />
 
         <section className="space-y-6 max-w-11/12 md:container mx-auto mt-4">
           <h1 className="text-2xl font-bold mb-6">
