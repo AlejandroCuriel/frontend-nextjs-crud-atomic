@@ -121,13 +121,14 @@ export function EditPostClient({ id }: { id: number }) {
                 </p>
               )}
             </div>
-
-            <button
-              type="submit"
-              className="btn btn--primario"
-            >
-              Guardar cambios
-            </button>
+            <div className="flex">
+              <button
+                type="submit"
+                className="mx-auto btn btn--primario"
+              >
+                Guardar cambios
+              </button>
+            </div>
           </form>
         </section>
       </div>
