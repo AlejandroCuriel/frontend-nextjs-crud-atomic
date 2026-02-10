@@ -77,9 +77,8 @@ export function EditPostClient({ id }: { id: number }) {
 
   return (
     <main className="min-h-screen space-y-6 flex items-center justify-center">
-      <div className="lg:w-2/6 mx-4 lg:mx-auto bg-[#f8f8f8] p-4 rounded-md shadow-md">
+      <div className="w-full lg:w-2/6 mx-4 lg:mx-auto bg-[#f8f8f8] p-4 rounded-md shadow-md">
         <BackButton />
-
         <section className="space-y-6 max-w-11/12 md:container mx-auto mt-4">
           <h1 className="text-2xl font-bold mb-6">
             Editar Post
@@ -125,16 +124,13 @@ export function EditPostClient({ id }: { id: number }) {
 
             <button
               type="submit"
-              className="bg-black text-white px-4 py-2 rounded hover:opacity-90"
+              className="btn btn--primario"
             >
               Guardar cambios
             </button>
           </form>
         </section>
-
-
       </div>
     </main>
-
   );
 }
