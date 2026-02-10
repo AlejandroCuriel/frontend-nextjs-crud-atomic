@@ -1,15 +1,26 @@
 "use client";
 
-import { PostFormValues, postSchema } from "@/src/features/posts/schemas/postSchema";
+import { Button } from "@/src/components/atoms/Button";
+import {
+  PostFormValues,
+  postSchema
+} from "@/src/features/posts/schemas/postSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 interface Props {
   defaultValues?: PostFormValues;
   onSubmit: (data: PostFormValues) => Promise<void>;
+  submitLabel?: string;
+  submittingLabel?: string;
 }
 
-export function PostForm({ defaultValues, onSubmit }: Props) {
+export function PostForm({
+  defaultValues,
+  onSubmit,
+  submitLabel = "Publicar Post",
+  submittingLabel = "Publicando Post..."
+}: Props) {
   const {
     register,
     handleSubmit,
@@ -43,12 +54,13 @@ export function PostForm({ defaultValues, onSubmit }: Props) {
         <p className="text-red-500 text-sm">{errors.body.message}</p>
       )}
       <div className="flex">
-        <button
+        <Button
+          type="submit"
           disabled={isSubmitting}
-          className={`mx-auto btn btn--primario ${isSubmitting ? 'btn--inactivo' : ''}`}
+          className="mx-auto"
         >
-          {isSubmitting ? "Publicando post..." : "Publicar Post"}
-        </button>
+          {isSubmitting ? submittingLabel : submitLabel}
+        </Button>
       </div>
 
     </form>
