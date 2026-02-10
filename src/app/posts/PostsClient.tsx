@@ -1,10 +1,13 @@
 "use client";
 
 import { usePostStore } from "@/src/features/posts/store/postStore";
+import { Post } from "@/src/features/posts/types/post";
 import { PostList } from "@/src/components/organisms/PostList";
 import { useEffect } from "react";
 
-export default function PostsClient({initialPosts}) {
+type Props = { initialPosts: Post[] };
+
+export default function PostsClient({ initialPosts }: Props) {
     const setPosts = usePostStore(state => state.setPosts);
 
   useEffect(() => {
@@ -13,16 +16,15 @@ export default function PostsClient({initialPosts}) {
       const localPosts = prev.filter(p => p.origin === "local");
 
       // Marcar API posts
-      const apiPosts = initialPosts.map(p => ({
+      const apiPosts = initialPosts.map((p) => ({
         ...p,
-        origin: "api"
+        origin: "api" as const
       }));
 
       return [...localPosts, ...apiPosts];
     });
   }, [initialPosts, setPosts]);
 
-  const finalPosts = usePostStore(state => state.posts);
-  console.log("POSTS RENDER", finalPosts);
+  const finalPosts = usePostStore((state) => state.posts);
   return <PostList posts={finalPosts} />;
 }
