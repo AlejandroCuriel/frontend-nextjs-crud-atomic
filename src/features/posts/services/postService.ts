@@ -9,13 +9,13 @@ export const PostService = {
     return apiFetch<Post[]>(`/posts${query ? `?${query}` : ''}`);
   },
 
-  getById: (id: number) =>
-    apiFetch<Post>(`/posts/${id}`),
-
   create: (data: Partial<Post>) =>
     apiFetch<Post>("/posts", {
       method: "POST",
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
     }),
 
   update: (id: number, data: Partial<Post>) =>
