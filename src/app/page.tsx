@@ -1,8 +1,6 @@
 import HomeClient from "@/src/app/posts/HomeClient";
-import { PostCardSkeleton } from "@/src/components/molecules/PostCardSkeleton";
 import { PostService } from "@/src/features/posts/services/postService";
 import Link from "next/link";
-import { Suspense } from "react";
 
 export default async function Home() {
   const posts = await PostService.getAll(7)
@@ -22,15 +20,7 @@ export default async function Home() {
       <section className="space-y-6 max-w-11/12 md:container mx-auto">
         <h2 className="text-center text-2xl"> Algunos de nuestros Posts</h2>
         <div className="md:w-5/6 mx-auto md:bg-[#f8f8f8] md:p-4 rounded-md md:shadow-md">
-          <Suspense fallback={
-            <div className="space-y-4 lg:grid grid-cols-3 gap-4">
-              {Array.from({ length: 7 }).map((_, i) => (
-                <PostCardSkeleton key={i} />
-              ))}
-            </div>
-          }>
-            <HomeClient initialPosts={posts} />
-          </Suspense>
+          <HomeClient initialPosts={posts} />
         </div>
       </section>
     </main>
