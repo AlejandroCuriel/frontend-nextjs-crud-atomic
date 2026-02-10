@@ -19,7 +19,7 @@ body {
 }
 
 .btn {
-  @apply text-white bg-gradient-to-r hover:bg-gradient-to-br shadow font-medium text-sm px-4 py-2.5 text-center leading-5 rounded-md cursor-pointer;
+  @apply text-white bg-gradient-to-r hover:bg-gradient-to-br shadow font-medium text-sm px-4 py-2.5 text-center leading-5 rounded-md cursor-pointer w-full md:w-80;
 }
 
 .btn--inactivo {
