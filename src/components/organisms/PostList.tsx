@@ -7,10 +7,10 @@ export function PostList({ posts }: { posts: Post[] }) {
   const [nextIndex, setNextIndex] = useState(10);
   const loaderRef = useRef(null);
 
-  const visiblePosts = useMemo(() => {
-    console.log('postlist:', posts)
-    return posts.slice(0, nextIndex);
-  }, [posts, nextIndex]);
+  const visiblePosts = useMemo(
+    () => posts.slice(0, nextIndex),
+    [posts, nextIndex]
+  );
 
 
   useEffect(() => {
@@ -32,6 +32,14 @@ export function PostList({ posts }: { posts: Post[] }) {
   }, [nextIndex, posts]);
 
 
+
+  if (posts.length === 0) {
+    return (
+      <p className="text-center text-gray-500 py-8">
+        No hay posts todavía. Crea el primero para comenzar.
+      </p>
+    );
+  }
 
   return (
     <>
