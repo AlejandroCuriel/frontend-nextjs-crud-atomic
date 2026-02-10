@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --background: #efefef;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.btn {
+  @apply text-white bg-gradient-to-r hover:bg-gradient-to-br shadow font-medium text-sm px-4 py-2.5 text-center leading-5 rounded-md cursor-pointer w-full md:w-80;
+}
+
+.btn--inactivo {
+  opacity: 0.4;
+}
+
+.btn--primario {
+  @apply from-orange-500 via-orange-600 to-orange-700 shadow-orange-500/50
+}
+
+.btn--secundario {
+  @apply from-amber-700 via-amber-800 to-amber-900 shadow-orange-500/50
+}
+
+.card_flotante {
+  @apply bg-white p-6 rounded-lg shadow transition-transform duration-300 ease-in-out hover:-translate-y-2 hover:scale-101 hover:shadow-md shadow-gray-500;
+}
+
+#header--imagen {
+  background-image: url('/header_montanias.jpg');
+  background-position: center;
+  height: 70dvh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
