@@ -1,15 +1,16 @@
 "use client";
 
-import { PostForm } from "@/src/components/molecules/PostForm";
-import { useRouter } from "next/navigation";
-import { usePostMutations } from "@/src/features/posts/hooks/usePostMutations";
 import BackButton from "@/src/components/atoms/BackButton";
+import { PostForm } from "@/src/components/molecules/PostForm";
+import { usePostMutations } from "@/src/features/posts/hooks/usePostMutations";
+import { PostFormValues } from "@/src/features/posts/schemas/postSchema";
+import { useRouter } from "next/navigation";
 
 export default function CreatePostPage() {
   const { handleCreate } = usePostMutations();
   const router = useRouter();
 
-  async function onSubmit(data) {
+  async function onSubmit(data: PostFormValues) {
     await handleCreate(data);
     router.push("/posts");
   }
